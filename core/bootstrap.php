@@ -1,5 +1,6 @@
 <?php
 //Путь до директории с конфигурационными файлами
+
 const DIR_CONFIG = '/../config';
 
 //Добавляем пользовательскую функцию автозагрузки классов
@@ -8,7 +9,10 @@ spl_autoload_register(function ($className) {
     $className = str_replace('\\', '/', $className);
 
     foreach ($paths['classes'] as $path) {
-        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$paths[root]/$path/$className.php";
+//        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$paths[root]/$path/$className.php";
+        // Внимание! В зависимости от места работы может работать та или иная строчка. Осторожнее.
+        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$path/$className.php";
+        echo $fileName . "<br>";
         if (file_exists($fileName)) {
             require_once $fileName;
         }
