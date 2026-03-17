@@ -1,0 +1,27 @@
+{
+    "name": "rh64s/pract-server",
+    "description": "practic for server part",
+    "type": "project",
+    "license": "MIT",
+    "config": {
+        "platform": {
+            "php": "8.2"
+        }
+    },
+    "authors": [
+        {
+            "name": "rh64s",
+            "email": "cchelovekov64@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "core/Src/",
+            "": "app/"
+        }
+    }
+}

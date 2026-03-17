@@ -3,20 +3,7 @@
 
 const DIR_CONFIG = '/../config';
 
-//Добавляем пользовательскую функцию автозагрузки классов
-spl_autoload_register(function ($className) {
-    $paths = include __DIR__ . DIR_CONFIG . '/path.php';
-    $className = str_replace('\\', '/', $className);
-
-    foreach ($paths['classes'] as $path) {
-//        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$paths[root]/$path/$className.php";
-//         Внимание! В зависимости от места работы может работать та или иная строчка. Осторожнее.
-        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$path/$className.php";
-        if (file_exists($fileName)) {
-            require_once $fileName;
-        }
-    }
-});
+require_once __DIR__ . '/../vendor/autoload.php';
 
 function getConfigs(string $path = DIR_CONFIG): array
 {
