@@ -10,9 +10,8 @@ spl_autoload_register(function ($className) {
 
     foreach ($paths['classes'] as $path) {
 //        $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$paths[root]/$path/$className.php";
-        // Внимание! В зависимости от места работы может работать та или иная строчка. Осторожнее.
+//         Внимание! В зависимости от места работы может работать та или иная строчка. Осторожнее.
         $fileName = $_SERVER['DOCUMENT_ROOT'] . "/$path/$className.php";
-        echo $fileName . "<br>";
         if (file_exists($fileName)) {
             require_once $fileName;
         }
