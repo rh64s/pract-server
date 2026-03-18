@@ -1,6 +1,7 @@
 <?php
 namespace Controllers;
 
+use Debug\DebugTools;
 use Src\View;
 
 class Site
@@ -13,6 +14,7 @@ class Site
 
     public function hello(): string
     {
+        DebugTools::log("Hello world!", true);
         return new View('site.hello', ['message' => 'hello working']);
     }
 }

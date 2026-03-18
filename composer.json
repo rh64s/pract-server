@@ -21,6 +21,7 @@
     "autoload": {
         "psr-4": {
             "Src\\": "core/Src/",
+            "Debug\\": "core/Debug/",
             "": "app/"
         }
     }
