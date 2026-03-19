@@ -1,20 +1,35 @@
 <?php
+
 namespace Controllers;
 
-use Debug\DebugTools;
+use Src\Request;
+use Models\Post;
 use Src\View;
 
 class Site
 {
     public function index(): string
     {
-        $view = new View();
-        return $view->render('site.hello', ['message' => 'index working!']);
+        $posts = Post::all();
+        return (new View())->render('site.post', ['posts' => $posts]);
+    }
+
+    public function show(Request $request): string
+    {
+        $posts = Post::where('id', $request->id)->get();
+        return (new View())->render('site.post', ['posts' => $posts]);
     }
 
     public function hello(): string
     {
-        DebugTools::log("Hello world!", true);
         return new View('site.hello', ['message' => 'hello working']);
+    }
+
+    public function signup(Request $request): string
+    {
+        if ($request->method==='POST' && User::create($request->all())){
+            return new View('site.signup', ['message'=>'Вы успешно зарегистрированы']);
+        }
+        return new View('site.signup');
     }
 }
