@@ -1,1 +1,1 @@
-<h2><?= $message ?? ''; ?></h2>
+<h2 class="text-body"><?= $message ?? ''; ?></h2>

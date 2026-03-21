@@ -1,8 +1,9 @@
 <h1>Список статей</h1>
-<ol>
+<hr>
+<ul class="list-group">
     <?php
     foreach ($posts as $post) {
-        echo '<li>' . $post->title . '</li>';
+        echo '<li class="list-group-item">' . $post->title . '</li>';
     }
     ?>
-</ol>
+</ul>

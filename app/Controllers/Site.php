@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Debug\DebugTools;
 use Models\User;
 use Src\Request;
 use Models\Post;
@@ -29,10 +30,19 @@ class Site
 
     public function signup(Request $request): string
     {
-        if ($request->method === 'POST' && User::create($request->all())) {
+        $user = Auth::user();
+        if (!$user) {
+            app()->route->redirect('/login');
+        }
+        if ($request->method === 'POST') {
+            if (User::all()->count() === 0) {
+                Auth::login(User::create(array_merge($request->all(), ['role_id' => 1])));
+            } else {
+                Auth::login(User::create(array_merge($request->all(), ['role_id' => ($user->role_id === 1 ? 2 : 3)])));
+            }
             app()->route->redirect('/go');
         }
-        return new View('site.signup');
+        return new View('site.create-user');
     }
 
     public function login(Request $request): string
