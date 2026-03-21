@@ -31,9 +31,6 @@ class Site
     public function signup(Request $request): string
     {
         $user = Auth::user();
-        if (!$user) {
-            app()->route->redirect('/login');
-        }
         if ($request->method === 'POST') {
             if (User::all()->count() === 0) {
                 Auth::login(User::create(array_merge($request->all(), ['role_id' => 1])));
