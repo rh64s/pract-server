@@ -5,6 +5,7 @@ namespace Middlewares;
 use Illuminate\Auth\Access\AuthorizationException;
 use Src\Auth\Auth;
 use Src\Request;
+use Src\View;
 
 class AdminOnlyMiddleware
 {
@@ -12,7 +13,7 @@ class AdminOnlyMiddleware
     {
         $role_id = Auth::user()->role_id;
         if ($role_id !== 1 || $role_id !== 2) {
-            app()->route->redirect('/login');
+            return (new View)->render('errors.403');
         }
     }
 

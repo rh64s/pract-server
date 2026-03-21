@@ -39,7 +39,7 @@ class Site
             }
             app()->route->redirect('/go');
         }
-        return new View('site.create-user');
+        return new View('site.create-user', ['message' => 'Так как ни одного пользователя нет, вы будете являться супер админом']);
     }
 
     public function login(Request $request): string
