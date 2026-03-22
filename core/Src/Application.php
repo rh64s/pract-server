@@ -2,6 +2,7 @@
 
 namespace Src;
 
+use App\Actions\CreateUserIfDoenstExists;
 use Error;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
@@ -52,17 +53,7 @@ class Application
         $this->dbManager->setEventDispatcher(new Dispatcher(new Container));
         $this->dbManager->setAsGlobal();
         $this->dbManager->bootEloquent();
-        if (User::all()->count() === 0) {
-            User::create([
-                'name' => 'Админ',
-                'surname' => 'Админович',
-                'login' => 'admin',
-                'password' => 'admin',
-                'role_id' => 1,
-                'email' => 'admin@example.com',
-                'phone' => '88005553535',
-            ]);
-        }
+        CreateUserIfDoenstExists::execute();
     }
 
     public function run(): void
