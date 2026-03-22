@@ -32,14 +32,10 @@ class Site
     {
         $user = Auth::user();
         if ($request->method === 'POST') {
-            if (User::all()->count() === 0) {
-                Auth::login(User::create(array_merge($request->all(), ['role_id' => 1])));
-            } else {
-                Auth::login(User::create(array_merge($request->all(), ['role_id' => ($user->role_id === 1 ? 2 : 3)])));
-            }
+            Auth::login(User::create(array_merge($request->all(), ['role_id' => ($user->role_id === 1 ? 2 : 3)])));
             app()->route->redirect('/go');
         }
-        return new View('site.create-user', ['message' => User::all()->count() === 0 ? 'Так как ни одного пользователя нет, вы будете являться супер админом' : '']);
+        return new View('site.create-user', ['message' => $user->role_id === 1 ? 'Создание админа' : 'Создание кладовщика']);
     }
 
     public function login(Request $request): string
