@@ -2,7 +2,6 @@
 
 namespace Middlewares;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Src\Auth\Auth;
 use Src\Request;
 use Src\View;
