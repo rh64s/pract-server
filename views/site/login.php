@@ -1,7 +1,7 @@
 <h2>Авторизация</h2>
 <hr>
 <h3><?= $message ?? ''; ?></h3>
-
+<br>
 <h3><?= app()->auth->user()->name ?? ''; ?></h3>
 <?php
 if (!app()->auth::check()):

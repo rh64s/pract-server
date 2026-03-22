@@ -2,10 +2,12 @@
 
 namespace Src;
 
+use App\Actions\CreateUserIfDoenstExists;
 use Error;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Models\User;
 use Src\Auth\Auth;
 
 class Application
@@ -51,6 +53,7 @@ class Application
         $this->dbManager->setEventDispatcher(new Dispatcher(new Container));
         $this->dbManager->setAsGlobal();
         $this->dbManager->bootEloquent();
+        CreateUserIfDoenstExists::execute();
     }
 
     public function run(): void

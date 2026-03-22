@@ -1,6 +1,7 @@
 <h2>Регистрация нового пользователя</h2>
 <hr>
 <h3><?= $message ?? ''; ?></h3>
+<br>
 <form method="post">
     <div class="container">
         <form method="post">
