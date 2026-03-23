@@ -1,3 +1,12 @@
+DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS DivisionsProducts;
+DROP TABLE IF EXISTS Products CASCADE;
+DROP TABLE IF EXISTS UnitTypes;
+DROP TABLE IF EXISTS Divisions;
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Roles;
+DROP TABLE IF EXISTS Posts;
+
 create table Roles(
     id int primary key auto_increment,
     name varchar(255) not null
@@ -56,3 +65,11 @@ create table DivisionsProducts (
 );
 
 insert into Roles (id, name) VALUES (1, 'superadmin'), (2, 'admin'), (3, 'storekeeper')
+
+CREATE TABLE Posts (
+	id int PRIMARY KEY auto_increment,
+	title varchar(255) NOT NULL,
+	text varchar(255)
+)
+
+
