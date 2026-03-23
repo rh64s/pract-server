@@ -11,6 +11,7 @@ return [
         'admin-only' => \Middlewares\AdminOnlyMiddleware::class,
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'trim' => \Middlewares\TrimMiddleware::class,
+        'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,
