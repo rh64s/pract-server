@@ -10,7 +10,10 @@ return [
 //        'access:superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'admin-only' => \Middlewares\AdminOnlyMiddleware::class,
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
-
-
+        'trim' => \Middlewares\TrimMiddleware::class,
+    ],
+    'validators' => [
+        'required' => \Validators\RequireValidator::class,
+        'unique' => \Validators\UniqueValidator::class
     ]
 ];
