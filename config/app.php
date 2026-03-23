@@ -12,6 +12,7 @@ return [
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'trim' => \Middlewares\TrimMiddleware::class,
         'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
+        'csrf' => \Middlewares\CSRFMiddleware::class,
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,
