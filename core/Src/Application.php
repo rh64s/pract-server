@@ -2,7 +2,7 @@
 
 namespace Src;
 
-use App\Actions\CreateUserIfDoenstExists;
+use Actions\CreateUserIfDoenstExists;
 use Error;
 use Illuminate\Container\Container;
 use Illuminate\Events\Dispatcher;
