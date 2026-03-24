@@ -7,11 +7,11 @@ use Src\Validator\AbstractValidator;
 class MinSymbolsValidator extends AbstractValidator
 {
 
-    protected string $message = 'Field :field should not be more than :max characters';
+    protected string $message = 'Field :field should not be more than :min characters';
 
     public function rule(): bool
     {
 
-        return (bool)strlen($this->value) <= (int) $this->args[0];
+        return (bool)strlen($this->value) >= (int) $this->args[0];
     }
 }

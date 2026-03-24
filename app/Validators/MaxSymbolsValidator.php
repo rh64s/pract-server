@@ -12,6 +12,6 @@ class MaxSymbolsValidator extends AbstractValidator
     public function rule(): bool
     {
 
-        return (bool)strlen($this->value) >= (int) $this->args[0];
+        return (bool)strlen($this->value) <= (int) $this->args[0];
     }
 }

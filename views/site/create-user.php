@@ -40,7 +40,6 @@
                     <?php foreach ($can_create as $role): ?>
                         <option value="<?= $role ?>"><?= \Models\Role::$roles[$role] ?></option>
                     <?php endforeach; ?>
-                    <option value="5">Гнидское</option>
                 </select>
             </div>
             <div class="col-auto">

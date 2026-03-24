@@ -36,18 +36,23 @@ class Site
         $can_create = $user->role->id === 1 ? [2,3] : [3];
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
-                'name' => ['required', 'max:255'],
-                'email' => ['required'],
-                'surname' => ['required'],
-                'phone' => ['required'],
-                'patronymic' => [],
+                'name' => ['required', 'max:255', 'min:3'],
+                'email' => ['required', 'email', 'max:255', 'unique:users,email', 'min:5'],
+                'surname' => ['required', 'max:255', 'min:3'],
+                'phone' => ['required', 'max:255', 'min:3', 'unique:users,phone', 'phone'],
+                'patronymic' => ['max:255'],
                 'role_id' => ['required', 'exists:roles,id'],
-                'login' => ['required', 'unique:users,login'],
-                'password' => ['required']
+                'login' => ['required', 'unique:users,login', 'max:255', 'min:3', 'regex:/^[a-zA-Z0-9]*$/'],
+                'password' => ['required', 'min:5', 'max:255']
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Значение для :field не подходит! Оно уже занято',
-                'exists' => 'Вы ввели несуществующее значение!'
+                'exists' => 'Вы ввели несуществующее значение в поле :field!',
+                'max' => 'Длина поля :field слишком длинное! Максимум: :max',
+                'min' => 'Длина поля :field слишком короткое! Минимум: :min',
+                'regex' => 'Поле логина должно иметь только латинские буквы и цифры',
+                'email' => 'Поле почты не является почтой',
+                'phone' => 'Вы ввели не номер телефона (только цифры)'
             ]);
 
             if($validator->fails()){
