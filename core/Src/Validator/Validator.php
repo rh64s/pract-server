@@ -39,7 +39,8 @@ class Validator
         //Перебираем все валидаторы, ассоциированные с полем
         foreach ($fieldValidators as $validatorName) {
             //Отделяем от имени валидатора дополнительные аргументы
-            [$validatorName, $args] = explode(':', $validatorName);
+            $tmp = explode(':', $validatorName);
+            [$validatorName, $args] = count($tmp) > 1 ? $tmp : [$validatorName, null];
             $args = isset($args) ? explode(',', $args) : [];
 
             //Соотносим имя валидатора с классом в массиве разрешенных валидаторов

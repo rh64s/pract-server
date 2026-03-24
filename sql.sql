@@ -1,75 +1,86 @@
-DROP TABLE IF EXISTS Orders;
-DROP TABLE IF EXISTS DivisionsProducts;
-DROP TABLE IF EXISTS Products CASCADE;
-DROP TABLE IF EXISTS UnitTypes;
-DROP TABLE IF EXISTS Divisions;
-DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Roles;
-DROP TABLE IF EXISTS Posts;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS divisions_products;
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS unit_types;
+DROP TABLE IF EXISTS divisions;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS roles;
+DROP TABLE IF EXISTS posts;
 
-create table Roles(
-    id int primary key auto_increment,
+create table roles
+(
+    id   int primary key auto_increment,
     name varchar(255) not null
 );
-create table Users(
-	id int PRIMARY KEY AUTO_INCREMENT,
-    name varchar(255) not null,
-    surname varchar(255) not null,
+create table users
+(
+    id         int PRIMARY KEY AUTO_INCREMENT,
+    name       varchar(255) not null,
+    surname    varchar(255) not null,
     patronymic varchar(255),
-    email varchar(255) not null,
-    phone varchar(13) not null,
-    password varchar(255) not null,
-    login varchar(255),
-    role_id int not null,
-    foreign key (role_id) REFERENCES Roles (id)
+    email      varchar(255) not null,
+    phone      varchar(13)  not null,
+    password   varchar(255) not null,
+    login      varchar(255),
+    role_id    int          not null,
+    foreign key (role_id) REFERENCES roles (id)
 );
 
-create table Divisions(
-	id int primary key auto_increment,
-    name varchar(255) not null,
-    user_id int not null,
-    foreign key (user_id) REFERENCES Users(id)
+create table divisions
+(
+    id      int primary key auto_increment,
+    name    varchar(255) not null,
+    user_id int          not null,
+    foreign key (user_id) REFERENCES users (id)
 );
 
-create table UnitTypes(
-	id int primary key auto_increment,
+create table unit_types
+(
+    id   int primary key auto_increment,
     name varchar(255) not null
 );
 
-create table Products (
-	id int primary key auto_increment,
-    name varchar(255) not null,
-    articul varchar(255) not null,
-    unit_type_id int not null,
-    foreign key (unit_type_id) REFERENCES UnitTypes (id)
+create table products
+(
+    id           int primary key auto_increment,
+    name         varchar(255) not null,
+    articul      varchar(255) not null,
+    unit_type_id int          not null,
+    foreign key (unit_type_id) REFERENCES unit_types (id)
 );
 
-create table Orders (
-	id int primary key auto_increment,
+create table orders
+(
+    id          int primary key auto_increment,
     division_id int not null,
-    product_id int not null,
-    count int not null,
+    product_id  int not null,
+    count       int not null,
 
-    foreign key (division_id) REFERENCES Divisions (id),
-    foreign key (product_id) REFERENCES Products (id)
+    foreign key (division_id) REFERENCES divisions (id),
+    foreign key (product_id) REFERENCES products (id)
 );
 
-create table DivisionsProducts (
-	division_id int not null,
-    product_id int not null,
-    count int not null,
-    foreign key (division_id) REFERENCES Divisions (id),
-    foreign key (product_id) REFERENCES Products (id),
-    min_value int not null default 1,
+create table divisions_products
+(
+    division_id int not null,
+    product_id  int not null,
+    count       int not null,
+    foreign key (division_id) REFERENCES divisions (id),
+    foreign key (product_id) REFERENCES products (id),
+    min_value   int not null default 1,
     primary key (division_id, product_id)
 );
 
-insert into Roles (id, name) VALUES (1, 'superadmin'), (2, 'admin'), (3, 'storekeeper')
+insert into roles (id, name)
+VALUES (1, 'superadmin'),
+       (2, 'admin'),
+       (3, 'storekeeper');
 
-CREATE TABLE Posts (
-	id int PRIMARY KEY auto_increment,
-	title varchar(255) NOT NULL,
-	text varchar(255)
-)
+CREATE TABLE posts
+(
+    id    int PRIMARY KEY auto_increment,
+    title varchar(255) NOT NULL,
+    text  varchar(255)
+);
 
 

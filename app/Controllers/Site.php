@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Debug\DebugTools;
+use Models\Role;
 use Models\User;
 use Src\Request;
 use Models\Post;
@@ -31,32 +32,36 @@ class Site
 
     public function signup(Request $request): string
     {
+        $user = Auth::user();
+        $can_create = $user->role->id === 1 ? [2,3] : [3];
         if ($request->method === 'POST') {
-
             $validator = new Validator($request->all(), [
-                'name' => ['required'],
+                'name' => ['required', 'max:255'],
                 'email' => ['required'],
                 'surname' => ['required'],
                 'phone' => ['required'],
                 'patronymic' => [],
-                'role_id' => ['required'],
+                'role_id' => ['required', 'exists:roles,id'],
                 'login' => ['required', 'unique:users,login'],
                 'password' => ['required']
             ], [
                 'required' => 'Поле :field пусто',
-                'unique' => 'Значение для :field не подходит! Оно уже занято'
+                'unique' => 'Значение для :field не подходит! Оно уже занято',
+                'exists' => 'Вы ввели несуществующее значение!'
             ]);
 
             if($validator->fails()){
-                return new View('site.signup',
-                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                return new View('site.create-user',
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'can_create' => $can_create]);
             }
 
             if (User::create($request->all())) {
-                app()->route->redirect('/login');
+                return new View('site.create-user', [
+                    'message' => ('Создание ' . Role::$roles[$request->all()['role_id']] . ' прошло успешно.'),
+                    'can_create' => $can_create]);
             }
         }
-        return new View('site.create-user', ['message' => $user->role_id === 1 ? 'Создание админа' : 'Создание кладовщика']);
+        return new View('site.create-user', ['can_create' => $can_create]);
     }
 
     public function login(Request $request): string

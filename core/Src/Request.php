@@ -22,14 +22,14 @@ class Request
         return $this->body + $this->files();
     }
 
-    public function set($field, $value):void
-    {
-        $this->body[$field] = $value;
-    }
-
     public function get($field)
     {
         return $this->body[$field];
+    }
+
+    public function set($field, $value): void
+    {
+        $this->body[$field] = $value;
     }
 
     public function files(): array

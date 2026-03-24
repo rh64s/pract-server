@@ -24,7 +24,8 @@ class View
         global $app;
         $root = $app->settings->getRootPath();
         $path = $app->settings->getViewsPath();
-        return $_SERVER['DOCUMENT_ROOT'] . $path; // было return $_SERVER['DOCUMENT_ROOT'] . $root . $path
+
+        return $_SERVER['DOCUMENT_ROOT'] . $root . $path;
     }
 
     //Путь до основного файла с шаблоном сайта
@@ -43,9 +44,10 @@ class View
     public function render(string $view = '', array $data = []): string
     {
         $path = $this->getPathToView($view);
+
         if (file_exists($this->getPathToMain()) && file_exists($path)) {
 
-            //Импортирт переменные из массива в текущую таблицу символов
+            //Импортирует переменные из массива в текущую таблицу символов
             extract($data, EXTR_PREFIX_SAME, '');
 
             //Включение буферизации вывода

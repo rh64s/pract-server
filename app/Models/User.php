@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\Auth\IdentityInterface;
@@ -10,7 +11,7 @@ class User extends Model implements IdentityInterface
 {
     use HasFactory;
 
-    protected $table = 'Users';
+    protected $table = "users";
 
     public $timestamps = false;
     protected $fillable = [
@@ -49,5 +50,10 @@ class User extends Model implements IdentityInterface
     {
         return self::where(['login' => $credentials['login'],
             'password' => md5($credentials['password'])])->first();
+    }
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 }

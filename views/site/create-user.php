@@ -34,6 +34,15 @@
                 <label class="form-label">Пароль</label>
                 <input class="form-control" type="password" name="password">
             </div>
+            <div class="mb-3">
+                <label class="form-label">Роль</label>
+                <select class="form-select" name="role_id">
+                    <?php foreach ($can_create as $role): ?>
+                        <option value="<?= $role ?>"><?= \Models\Role::$roles[$role] ?></option>
+                    <?php endforeach; ?>
+                    <option value="5">Гнидское</option>
+                </select>
+            </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary mb-3">Зарегистрировать</button>
             </div>
