@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Debug\DebugTools;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Models\Role;
 use Models\User;
@@ -39,17 +40,17 @@ class UserController
             ]);
 
             if($validator->fails()){
-                return new View('site.create-user',
+                return new View('site.users.create',
                     ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'can_create' => $can_create]);
             }
 
             if (User::create($request->all())) {
-                return new View('site.create-user', [
+                return new View('site.users.create', [
                     'message' => ('Создание ' . Role::$roles[$request->all()['role_id']] . ' прошло успешно.'),
                     'can_create' => $can_create]);
             }
         }
-        return new View('site.create-user', ['can_create' => $can_create]);
+        return new View('site.users.create', ['can_create' => $can_create]);
     }
     public function index(Request $request): string
     {
@@ -63,13 +64,13 @@ class UserController
             }
             $current_role = $request->all()['choiced_role_id'];
 
-            if(isset($request->all()['search']) && !empty($request->all()['search'])) {
-                $users = User::searchNameRoleAttribute($request->all()['search'], 2);
+            if(!empty($request->get('search'))) {
+                $users = User::searchNameRoleAttribute($request->all()['search'], $current_role);
                 return new View('site.users.index', [
                     'can_view' => $can_view,
-                    'users' => !empty($users) ? $users : null,
+                    'users' => $users,
                     'current_role' => $current_role,
-                    'search_text' => $request->all()['search'],
+                    'search_text' => $request->get('search'),
                 ]);
             }
 
@@ -78,9 +79,26 @@ class UserController
 
     }
 
-    public function delete($user_id): string
+    public function delete(Request $request): string
     {
-        return "sas";
+        $validator = new Validator($request->all(), [
+            'id' => ['required', 'exists:users,id', 'regex:/^[0-9]*$/'],
+        ], [
+            'required' => 'Поле :field пусто',
+            'exists' => 'Пользователь не найден',
+            'regex' => 'Некорректный формат ID',
+        ]);
+
+        if ($validator->fails()) {
+            app()->route->redirect('/users');
+        }
+
+        try {
+            User::destroy((int) $request->get('id'));
+        } catch (Exception $e) {
+            throw new \Error($e);
+        }
+        app()->route->redirect('/users');
     }
 
     public function show(Request $request): string

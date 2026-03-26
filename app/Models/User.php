@@ -59,8 +59,11 @@ class User extends Model implements IdentityInterface
 
     public static function searchNameRoleAttribute($value, $role_id)
     {
-        return User::all()->filter(function ($user) use ($value, $role_id) {
-            return $user->role_id === $role_id && str_contains($user->surname . " " . $user->name . " " . $user->patronymic, $value);
-        })->sortBy('surname')->sortBy('name')->sortBy('patronymic');
+        return User::where('role_id', $role_id)
+            ->whereRaw('LOWER(CONCAT_WS(" ", surname, name, patronymic)) LIKE ?', ["%".mb_strtolower($value)."%"])
+            ->orderBy('surname')
+            ->orderBy('name')
+            ->orderBy('patronymic')
+            ->get();
     }
 }
