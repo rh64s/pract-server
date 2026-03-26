@@ -25,6 +25,7 @@ create table users
     phone      varchar(13)  not null,
     password   varchar(255) not null,
     login      varchar(255),
+    avatar     varchar(255) not null,
     role_id    bigint unsigned         not null,
     foreign key (role_id) REFERENCES roles (id)
 );
@@ -57,6 +58,7 @@ create table orders
     division_id bigint unsigned not null,
     product_id  bigint unsigned not null,
     count       int not null,
+    is_completed bool not null default false,
     created_at  TIMESTAMP not null default now(),
     updated_at  TIMESTAMP,
 

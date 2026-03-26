@@ -9,3 +9,16 @@ body {
 main {
     min-height: 80vh;
 }
+.avatar-container {
+    margin-bottom: 20px;
+    width: 150px;
+    height: 150px;
+    min-height: 150px;
+}
+.avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #eee;
+    object-fit: cover;
+}

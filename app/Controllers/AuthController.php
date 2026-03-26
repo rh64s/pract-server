@@ -15,7 +15,8 @@ class AuthController
 {
     public function hello(): string
     {
-        return new View('site.hello', ['message' => 'hello working']);
+        $user = Auth::user();
+        return new View('site.hello', ['user' => $user]);
     }
 
     public function login(Request $request): string

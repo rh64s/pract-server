@@ -6,8 +6,6 @@ return [
     'identity'=>\Models\User::class,
     'routeMiddleware' => [
         'auth' => \Middlewares\AuthMiddleware::class,
-//        'access:admin-only' => \Middlewares\AdminOnlyMiddleware::class,
-//        'access:superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'admin-only' => \Middlewares\AdminOnlyMiddleware::class,
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'trim' => \Middlewares\TrimMiddleware::class,
@@ -25,5 +23,6 @@ return [
         'email' => \Validators\EmailValidator::class,
         'phone' => \Validators\PhoneValidator::class,
         'regex' => \Validators\RawRegexValidation::class,
+        'mime' => \Validators\MimeTypesValidator::class
     ]
 ];

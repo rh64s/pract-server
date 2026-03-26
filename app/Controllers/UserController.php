@@ -100,6 +100,40 @@ class UserController
         app()->route->redirect('/users');
     }
 
+    public function setAvatar(Request $request): string
+    {
+        if ($request->method === 'POST' && $request->get('avatar')) {
+
+            $validator = new Validator($request->all(), [
+                'avatar' => ['required', 'mime:image/*']
+            ], [
+                'mime' => 'Вы загрузили не изображение!',
+                'required' => 'Вы не загрузили изображение!'
+            ]);
+
+            if ($validator->fails()) {
+                return new View('site.users.set-avatar', ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+            }
+
+            $file = $request->get('avatar');
+            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+            $filename = md5(time()) . '.' . $extension;
+            $path = 'public/uploads/avatars/' . $filename;
+
+            if (move_uploaded_file($file['tmp_name'], $path)) {
+                $user = Auth::user();
+                if ($user->avatar) {
+                    unlink($user->avatar);
+                }
+                $user->update(['avatar' => $path]);
+                return new View('site.users.set-avatar', ['message' => 'Аватар успешно обновлен.']);
+            }
+
+            return new View('site.users.set-avatar', ['message' => 'Ошибка при загрузке файла.']);
+        }
+        return new View('site.users.set-avatar');
+    }
+
     public function show(Request $request): string
     {
         if (((string) gettype((int) $request->get('id'))) == 'NULL') {

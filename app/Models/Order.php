@@ -12,9 +12,19 @@ class Order extends Model
     protected $fillable = [
         'division_id',
         'product_id',
-        'count'
+        'count',
+        'is_completed'
     ];
 
+    public function markAsCompleted(): void
+    {
+        $this->is_completed = true;
+        $this->save();
+
+        $division_product = ProductInDivision::where('division_id', $this->division)->where('product_id', $this->product_id)->first();
+        $division_product->count += $this->count;
+        $division_product->save();
+    }
     public function division(): BelongsTo
     {
         return $this->belongsTo(Division::class, 'division_id');
