@@ -55,6 +55,8 @@ create table orders
     division_id int not null,
     product_id  int not null,
     count       int not null,
+    created_at  TIMESTAMP not null default now(),
+    updated_at  TIMESTAMP,
 
     foreign key (division_id) REFERENCES divisions (id),
     foreign key (product_id) REFERENCES products (id)

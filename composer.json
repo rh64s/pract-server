@@ -20,7 +20,8 @@
         "illuminate/database": "12.x-dev",
         "illuminate/events": "12.x-dev",
         "nikic/fast-route": "^2.0@dev",
-        "twbs/bootstrap": "5.0.2"
+        "twbs/bootstrap": "5.0.2",
+        "phpunit/phpunit": "11.5.x-dev"
     },
     "autoload": {
         "psr-4": {

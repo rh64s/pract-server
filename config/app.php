@@ -13,6 +13,7 @@ return [
         'trim' => \Middlewares\TrimMiddleware::class,
         'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
         'csrf' => \Middlewares\CSRFMiddleware::class,
+        'int' => \Middlewares\OnlyNumInParameter::class,
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,

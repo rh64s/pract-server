@@ -12,6 +12,6 @@ class EmailValidator extends AbstractValidator
     public function rule(): bool
     {
 
-        return (bool)!preg_match('/^.[a-zA-Z.-]*@.[a-zA-Z]*\..[a-zA-Z]*$/', $this->value);
+        return (bool)preg_match('/^.[0-9a-zA-Z.-]*@.[a-zA-Z]*\..[a-zA-Z]*$/', $this->value);
     }
 }

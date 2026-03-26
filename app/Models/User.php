@@ -56,4 +56,11 @@ class User extends Model implements IdentityInterface
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
+
+    public static function searchNameRoleAttribute($value, $role_id)
+    {
+        return User::all()->filter(function ($user) use ($value, $role_id) {
+            return $user->role_id === $role_id && str_contains($user->surname . " " . $user->name . " " . $user->patronymic, $value);
+        })->sortBy('surname')->sortBy('name')->sortBy('patronymic');
+    }
 }

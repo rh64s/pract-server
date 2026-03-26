@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="main.css" rel="stylesheet">
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
     <title>Pop it MVC</title>
 </head>
 <body>
@@ -37,7 +37,10 @@
                             if (in_array($user_id, [1, 2])):
                                 ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= app()->route->getUrl('/signup') ?>">Регистрация пользователя</a>
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/users/create') ?>">Регистрация пользователя</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/users') ?>">Управление пользователями</a>
                                 </li>
                     <?php endif ?>
                     <li class="nav-item">
@@ -56,7 +59,7 @@
 </main>
 <footer class="container-lg bg-light p-5">
     <div class="container-sm">
-        <p>Университетская программа по управлению ресурсами в отдалах</p>
+        <p>Университетская программа по управлению ресурсами в отделах</p>
         <p>Сделано с душой</p>
     </div>
 </footer>
