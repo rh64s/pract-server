@@ -14,6 +14,7 @@ return [
         'specialChars' => \Middlewares\SpecialCharsMiddleware::class,
         'csrf' => \Middlewares\CSRFMiddleware::class,
         'int' => \Middlewares\OnlyNumInParameter::class,
+        'storekeeper-only' => \Middlewares\StorekeeperOnly::class
     ],
     'validators' => [
         'required' => \Validators\RequireValidator::class,

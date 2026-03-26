@@ -44,6 +44,13 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= app()->route->getUrl('/unit-types') ?>">Типы единиц</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/products') ?>">Продукты</a>
+                                </li>
+                    <?php elseif (app()->auth::check()): ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/orders') ?>">Заказы</a>
+                                </li>
                     <?php endif ?>
                     <li class="nav-item">
                         <a class="nav-link"  href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>

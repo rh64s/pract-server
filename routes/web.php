@@ -22,3 +22,12 @@ Route::add(['GET', 'POST'], '/unit-types', [Controllers\UnitTypeController::clas
 Route::add(['GET', 'POST'], '/unit-types/show', [Controllers\UnitTypeController::class, 'show'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
 Route::add(['GET', 'POST'], '/unit-types/create', [Controllers\UnitTypeController::class, 'store'])->middleware('csrf', 'admin-only', 'trim');
 Route::add('POST', '/unit-types/delete', [Controllers\UnitTypeController::class, 'delete'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
+
+Route::add(['GET', 'POST'], '/products', [Controllers\ProductController::class, 'index'])->middleware('admin-only', 'trim', 'csrf');
+Route::add(['GET', 'POST'], '/products/show', [Controllers\ProductController::class, 'show'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
+Route::add(['GET', 'POST'], '/products/create', [Controllers\ProductController::class, 'store'])->middleware('csrf', 'admin-only', 'trim');
+Route::add('POST', '/products/delete', [Controllers\ProductController::class, 'delete'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
+
+Route::add('GET', '/orders', [Controllers\OrderController::class, 'index'])->middleware('auth');
+Route::add(['GET', 'POST'], '/orders/create', [Controllers\OrderController::class, 'store'])->middleware('csrf', 'storekeeper-only', 'trim');
+Route::add('POST', '/orders/delete', [Controllers\OrderController::class, 'delete'])->middleware('csrf', 'auth', 'trim', 'int:id');

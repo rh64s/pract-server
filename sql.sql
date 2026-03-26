@@ -9,12 +9,15 @@ DROP TABLE IF EXISTS posts;
 
 create table roles
 (
-    id   int primary key auto_increment,
+    id   serial primary key,
     name varchar(255) not null
 );
+
+-- make that users can have only one division
+
 create table users
 (
-    id         int PRIMARY KEY AUTO_INCREMENT,
+    id         serial PRIMARY KEY,
     name       varchar(255) not null,
     surname    varchar(255) not null,
     patronymic varchar(255),
@@ -22,38 +25,37 @@ create table users
     phone      varchar(13)  not null,
     password   varchar(255) not null,
     login      varchar(255),
-    role_id    int          not null,
+    role_id    bigint unsigned         not null,
     foreign key (role_id) REFERENCES roles (id)
 );
-
 create table divisions
 (
-    id      int primary key auto_increment,
+    id      serial primary key,
     name    varchar(255) not null,
-    user_id int,
+    user_id bigint unsigned,
     foreign key (user_id) REFERENCES users (id) on delete no action on update cascade
 );
 
 create table unit_types
 (
-    id   int primary key auto_increment,
+    id   serial primary key,
     name varchar(255) not null
 );
 
 create table products
 (
-    id           int primary key auto_increment,
+    id           serial primary key,
     name         varchar(255) not null,
     articul      varchar(255) not null,
-    unit_type_id int          not null,
-    foreign key (unit_type_id) REFERENCES unit_types (id) on delete no action on update cascade
+    unit_type_id bigint unsigned,
+    foreign key (unit_type_id) REFERENCES unit_types (id) on delete set null on update cascade
 );
 
 create table orders
 (
-    id          int primary key auto_increment,
-    division_id int not null,
-    product_id  int not null,
+    id          serial primary key,
+    division_id bigint unsigned not null,
+    product_id  bigint unsigned not null,
     count       int not null,
     created_at  TIMESTAMP not null default now(),
     updated_at  TIMESTAMP,
@@ -64,8 +66,8 @@ create table orders
 
 create table divisions_products
 (
-    division_id int not null,
-    product_id  int not null,
+    division_id bigint unsigned not null,
+    product_id  bigint unsigned not null,
     count       int not null,
     foreign key (division_id) REFERENCES divisions (id) on delete cascade,
     foreign key (product_id) REFERENCES products (id) on delete cascade,
@@ -77,12 +79,3 @@ insert into roles (id, name)
 VALUES (1, 'superadmin'),
        (2, 'admin'),
        (3, 'storekeeper');
-
-CREATE TABLE posts
-(
-    id    int PRIMARY KEY auto_increment,
-    title varchar(255) NOT NULL,
-    text  varchar(255)
-);
-
-

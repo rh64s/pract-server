@@ -2,8 +2,6 @@
 
 namespace Models;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Src\Auth\IdentityInterface;
@@ -58,9 +56,9 @@ class User extends Model implements IdentityInterface
         return $this->belongsTo(Role::class, 'role_id');
     }
 
-    public function divisions(): HasMany
+    public function division(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasMany(Division::class, 'user_id');
+        return $this->hasOne(\Models\Division::class, 'user_id');
     }
 
     public static function searchNameRoleAttribute($value, $role_id)
@@ -86,5 +84,10 @@ class User extends Model implements IdentityInterface
     public function isSuperAdmin(): bool
     {
         return $this->role->id === 1;
+    }
+
+    public function isStoreKeeper(): bool
+    {
+        return $this->role->id === 3;
     }
 }

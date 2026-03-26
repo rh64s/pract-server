@@ -16,11 +16,14 @@ class DivisionController
     public function store(Request $request): string
     {
         $user = Auth::user();
+        $storekeepers = User::where('role_id', 3)
+            ->doesntHave('division')
+            ->get();
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
                 'name' => ['required', 'max:255', 'min:3', 'unique:divisions,name'],
-                'user_id' => ['required', 'exists:users,id'],
+                'user_id' => ['required', 'exists:users,id', 'unique:divisions,user_id'],
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Значение для :field не подходит! Оно уже занято',
@@ -28,7 +31,6 @@ class DivisionController
                 'max' => 'Длина поля :field слишком длинное! Максимум: :value',
                 'min' => 'Длина поля :field слишком короткое! Минимум: :value',
             ]);
-            $storekeepers = User::where('role_id', 3)->get();
 
             if($validator->fails()){
                 return new View('site.divisions.create',
@@ -42,7 +44,6 @@ class DivisionController
                 ]);
             }
         }
-        $storekeepers = User::where('role_id', 3)->get();
         return new View('site.divisions.create', ['storekeepers' => $storekeepers]);
     }
 
@@ -107,12 +108,19 @@ class DivisionController
             app()->route->redirect('/divisions');
         }
 
-        $storekeepers = User::where('role_id', 3)->get();
+        $storekeepers = User::where('role_id', 3)
+            ->where(function ($query) use ($current_division) {
+                $query->doesntHave('division')
+                    ->orWhereHas('division', function ($query) use ($current_division) {
+                        $query->where('id', $current_division->id);
+                    });
+            })
+            ->get();
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
-                'name' => ['required', 'max:255', 'min:3', 'unique:divisions,name,' . $current_division->id],
-                'user_id' => ['exists:users,id'],
+                'name' => ['required', 'max:255', 'min:3', ( $request->get('name') !== $current_division->name ? ('unique:divisions,name') : '')],
+                'user_id' => ['exists:users,id', ( $request->get('user_id') !== $current_division->user_id ? ('unique:divisions,name') : '')],
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Значение для :field не подходит! Оно уже занято',
