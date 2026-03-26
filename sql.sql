@@ -30,7 +30,7 @@ create table divisions
 (
     id      int primary key auto_increment,
     name    varchar(255) not null,
-    user_id int          not null,
+    user_id int,
     foreign key (user_id) REFERENCES users (id)
 );
 
