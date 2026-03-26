@@ -1,6 +1,11 @@
-<h2>Отображение пользователей</h2>
+<h2>Отображение подразделений</h2>
 <hr>
 <h3><?= $message ?? ''; ?></h3>
+<br>
+<div class="container-sm">
+    <a class="btn btn-primary" href="<?= app()->route->getUrl('/divisions/create') ?>">Создание раздела</a>
+</div>
+<br>
 <br>
 <div class="container">
     <form method="post">
@@ -15,7 +20,6 @@
     </form>
 </div>
 <hr>
-<h3>Вы просматриваете: <?= htmlspecialchars(\Models\Role::$roles[$current_role]) ?></h3>
 
 <?php if(isset($search_text)): ?>
 <h4>Результаты запроса по "<b><?= $search_text ?></b>"</h4>
@@ -28,7 +32,9 @@
             <th></th>
             <th>ID</th>
             <th>Название</th>
+            <th>ID кладовщика</th>
             <th>Имя кладовщика</th>
+            <th>Фамилия кладовщика</th>
             <th>Отчество кладовщика</th>
             <th>Телефон кладовщика</th>
         </tr>
@@ -37,10 +43,12 @@
         <?php if (!empty($divisions)): ?>
         <?php foreach ($divisions as $division): ?>
             <tr class="td-all-text-centered">
-                <td><a class="btn btn-outline-primary" href="<?= app()->route->getUrl('/users/show?id=' . (int) $division->id) ?>">-></a></td>
+                <td><a class="btn btn-outline-primary" href="<?= app()->route->getUrl('/divisions/show?id=' . (int) $division->id) ?>">-></a></td>
                 <td><?= htmlspecialchars($division->id) ?></td>
                 <td><?= htmlspecialchars($division->name) ?></td>
+                <td><?= htmlspecialchars($division->user->id) ?></td>
                 <td><?= htmlspecialchars($division->user->name) ?></td>
+                <td><?= htmlspecialchars($division->user->surname) ?></td>
                 <td><?= htmlspecialchars($division->user->patronymic ?? '-') ?></td>
                 <td><?= htmlspecialchars($division->user->phone) ?></td>
             </tr>

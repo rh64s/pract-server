@@ -2,11 +2,9 @@
 
 namespace Controllers;
 
-use Debug\DebugTools;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Models\Division;
-use Models\Role;
 use Models\User;
 use Src\Auth\Auth;
 use Src\Request;
@@ -18,10 +16,6 @@ class DivisionController
     public function store(Request $request): string
     {
         $user = Auth::user();
-        // Assuming only admin (role_id 1) can create divisions
-        if ($user->role->id !== 1 || $user->role->id !== 2) {
-            app()->route->redirect('/divisions');
-        }
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
@@ -34,26 +28,29 @@ class DivisionController
                 'max' => 'Длина поля :field слишком длинное! Максимум: :value',
                 'min' => 'Длина поля :field слишком короткое! Минимум: :value',
             ]);
+            $storekeepers = User::where('role_id', 3)->get();
 
             if($validator->fails()){
                 return new View('site.divisions.create',
-                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'storekeepers' => $storekeepers]);
             }
 
             if (Division::create($request->all())) {
                 return new View('site.divisions.create', [
                     'message' => ('Создание подразделения прошло успешно.'),
+                    'storekeepers' => $storekeepers
                 ]);
             }
         }
-        return new View('site.divisions.create');
+        $storekeepers = User::where('role_id', 3)->get();
+        return new View('site.divisions.create', ['storekeepers' => $storekeepers]);
     }
 
     public function index(Request $request): string
     {
         $user = Auth::user();
         // Assuming only admin (role_id 1) can view all divisions
-        if ($user->role->id !== 1) {
+        if (!$user->isAdmin()) {
             app()->route->redirect('/'); // Redirect to a more appropriate page for non-admins
         }
 
@@ -69,13 +66,9 @@ class DivisionController
         return new View('site.divisions.index', ['divisions' => Division::all()->sortBy('name')]);
     }
 
-    public function delete(Request $request): string
+    public function delete(Request $request): void
     {
-        $user = Auth::user();
         // Assuming only admin (role_id 1) can delete divisions
-        if ($user->role->id !== 1 || $user->role->id !== 2) {
-            app()->route->redirect('/divisions');
-        }
 
         $validator = new Validator($request->all(), [
             'id' => ['required', 'exists:divisions,id', 'regex:/^[0-9]*$/'],
@@ -91,10 +84,10 @@ class DivisionController
 
         try {
             Division::destroy((int) $request->get('id'));
+            app()->route->redirect('/divisions');
         } catch (Exception $e) {
             throw new \Error($e);
         }
-        app()->route->redirect('/divisions');
     }
 
     public function show(Request $request): string
@@ -104,7 +97,7 @@ class DivisionController
         }
         $user = Auth::user();
         // Assuming only admin (role_id 1) can manage divisions
-        if ($user->role->id !== 1) {
+        if (!$user->isAdmin()) {
             app()->route->redirect('/divisions');
         }
 
@@ -114,10 +107,12 @@ class DivisionController
             app()->route->redirect('/divisions');
         }
 
+        $storekeepers = User::where('role_id', 3)->get();
+
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
                 'name' => ['required', 'max:255', 'min:3', 'unique:divisions,name,' . $current_division->id],
-                'user_id' => ['exists:users,id', 'regex:/^[0-9]*$/'],
+                'user_id' => ['exists:users,id'],
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Значение для :field не подходит! Оно уже занято',
@@ -128,15 +123,17 @@ class DivisionController
 
             if($validator->fails()){
                 return new View('site.divisions.show',
-                    ['division' => $current_division, 'message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
+                    ['division' => $current_division, 'message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'storekeepers' => $storekeepers]);
             }
 
             if ($current_division->update($request->all())) {
                 return new View('site.divisions.show', [
                     'message' => ('Обновлено успешно!'),
-                    'division' => $current_division]);
+                    'division' => $current_division,
+                    'storekeepers' => $storekeepers
+                ]);
             }
         }
-        return new View('site.divisions.show', ['division' => $current_division]);
+        return new View('site.divisions.show', ['division' => $current_division, 'storekeepers' => $storekeepers]);
     }
 }

@@ -17,3 +17,8 @@ Route::add(['GET', 'POST'], '/divisions', [Controllers\DivisionController::class
 Route::add(['GET', 'POST'], '/divisions/show', [Controllers\DivisionController::class, 'show'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
 Route::add(['GET', 'POST'], '/divisions/create', [Controllers\DivisionController::class, 'store'])->middleware('csrf', 'admin-only', 'trim');
 Route::add('POST', '/divisions/delete', [Controllers\DivisionController::class, 'delete'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
+
+Route::add(['GET', 'POST'], '/unit-types', [Controllers\UnitTypeController::class, 'index'])->middleware('admin-only', 'trim', 'csrf');
+Route::add(['GET', 'POST'], '/unit-types/show', [Controllers\UnitTypeController::class, 'show'])->middleware('csrf', 'admin-only', 'trim', 'int:id');
+Route::add(['GET', 'POST'], '/unit-types/create', [Controllers\UnitTypeController::class, 'store'])->middleware('csrf', 'admin-only', 'trim');
+Route::add('POST', '/unit-types/delete', [Controllers\UnitTypeController::class, 'delete'])->middleware('csrf', 'admin-only', 'trim', 'int:id');

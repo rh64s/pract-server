@@ -33,14 +33,16 @@
                             </li>
                     <?php
                         else:
-                            $user_id = app()->auth::user()->role_id;
-                            if (in_array($user_id, [1, 2])):
+                            if (app()->auth::user()->isAdmin()):
                                 ?>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= app()->route->getUrl('/users/create') ?>">Регистрация пользователя</a>
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/users') ?>">Пользователи</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="<?= app()->route->getUrl('/users') ?>">Управление пользователями</a>
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/divisions') ?>">Подразделения</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/unit-types') ?>">Типы единиц</a>
                                 </li>
                     <?php endif ?>
                     <li class="nav-item">

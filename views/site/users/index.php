@@ -2,6 +2,11 @@
 <hr>
 <h3><?= $message ?? ''; ?></h3>
 <br>
+<div class="container-sm">
+    <a class="btn btn-primary" href="<?= app()->route->getUrl('/users/create') ?>">Регистрация пользователя</a>
+</div>
+<br>
+<br>
 <div class="container">
     <form method="post">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>

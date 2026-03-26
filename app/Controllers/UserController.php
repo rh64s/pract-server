@@ -17,7 +17,7 @@ class UserController
     public function store(Request $request): string
     {
         $user = Auth::user();
-        $can_create = $user->role->id === 1 ? [2,3] : [3];
+        $can_create = $user->isSuperAdmin() ? [2,3] : [3];
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
                 'name' => ['required', 'max:255', 'min:3'],
@@ -56,8 +56,7 @@ class UserController
     {
         $user = Auth::user();
         $current_role = 3;
-        $role = $user->role->id;
-        $can_view = $role === 1 ? [2,3] : [3];
+        $can_view = $user->isSuperAdmin() ? [2,3] : [3];
         if($request->method === 'POST') {
             if(!in_array($request->all()['choiced_role_id'], $can_view)) {
                 return new View('site.users.index', ['can_view' => $can_view, 'current_role' => $current_role, 'message' => 'Вы не можете просматривать эту группу']);
@@ -79,7 +78,7 @@ class UserController
 
     }
 
-    public function delete(Request $request): string
+    public function delete(Request $request): void
     {
         $validator = new Validator($request->all(), [
             'id' => ['required', 'exists:users,id', 'regex:/^[0-9]*$/'],
@@ -112,7 +111,7 @@ class UserController
         } catch (ModelNotFoundException $e) {
             app()->route->redirect('/users');
         }
-        $can_role = $user->role->id === 1 ? [2,3] : [3];
+        $can_role = $user->isSuperAdmin() ? [2,3] : [3];
 
         if ($request->method === 'POST') {
             $validator = new Validator($request->all(), [
@@ -136,7 +135,7 @@ class UserController
 
             if($validator->fails()){
                 return new View('site.create-user',
-                    ['user' => $current_user, 'message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'can_create' => $can_create]);
+                    ['user' => $current_user, 'message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE), 'can_create' => $can_role]);
             }
 
             if ($current_user->update($request->all())) {

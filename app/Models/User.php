@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Models\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -57,6 +58,11 @@ class User extends Model implements IdentityInterface
         return $this->belongsTo(Role::class, 'role_id');
     }
 
+    public function divisions(): HasMany
+    {
+        return $this->hasMany(Division::class, 'user_id');
+    }
+
     public static function searchNameRoleAttribute($value, $role_id)
     {
         return User::where('role_id', $role_id)
@@ -65,5 +71,20 @@ class User extends Model implements IdentityInterface
             ->orderBy('name')
             ->orderBy('patronymic')
             ->get();
+    }
+
+    public static function isUserAdmin(User $user): bool
+    {
+        return $user->role->id === 1 || $user->role->id === 2;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role->id === 1 || $this->role->id === 2;
+    }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->role->id === 1;
     }
 }

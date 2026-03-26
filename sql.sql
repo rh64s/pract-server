@@ -31,7 +31,7 @@ create table divisions
     id      int primary key auto_increment,
     name    varchar(255) not null,
     user_id int,
-    foreign key (user_id) REFERENCES users (id)
+    foreign key (user_id) REFERENCES users (id) on delete no action on update cascade
 );
 
 create table unit_types
@@ -46,7 +46,7 @@ create table products
     name         varchar(255) not null,
     articul      varchar(255) not null,
     unit_type_id int          not null,
-    foreign key (unit_type_id) REFERENCES unit_types (id)
+    foreign key (unit_type_id) REFERENCES unit_types (id) on delete no action on update cascade
 );
 
 create table orders
@@ -67,8 +67,8 @@ create table divisions_products
     division_id int not null,
     product_id  int not null,
     count       int not null,
-    foreign key (division_id) REFERENCES divisions (id),
-    foreign key (product_id) REFERENCES products (id),
+    foreign key (division_id) REFERENCES divisions (id) on delete cascade,
+    foreign key (product_id) REFERENCES products (id) on delete cascade,
     min_value   int not null default 1,
     primary key (division_id, product_id)
 );
