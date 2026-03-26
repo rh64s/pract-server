@@ -1,5 +1,7 @@
 <?php
 
+namespace Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Models\Division;
 use Models\Product;

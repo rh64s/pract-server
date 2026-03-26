@@ -47,9 +47,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= app()->route->getUrl('/products') ?>">Продукты</a>
                                 </li>
-                    <?php elseif (app()->auth::check()): ?>
+                    <?php elseif (app()->auth::user()->isStorekeeper()): ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= app()->route->getUrl('/orders') ?>">Заказы</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/division-products') ?>">Продукты подразделения</a>
                                 </li>
                     <?php endif ?>
                     <li class="nav-item">
