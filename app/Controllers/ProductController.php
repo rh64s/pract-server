@@ -8,7 +8,7 @@ use Models\Product;
 use Models\UnitType;
 use Src\Auth\Auth;
 use Src\Request;
-use Src\Validator\Validator;
+use BasicFilter\Validator\Validator;
 use Src\View;
 
 class ProductController

@@ -2,12 +2,7 @@
 
 namespace Controllers;
 
-use Debug\DebugTools;
-use Models\Role;
-use Models\User;
 use Src\Request;
-use Models\Post;
-use Src\Validator\Validator;
 use Src\View;
 use Src\Auth\Auth;
 

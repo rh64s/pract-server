@@ -2,14 +2,13 @@
 
 namespace Controllers;
 
-use Debug\DebugTools;
 use Error;
 use Exception;
 use Models\Product;
 use Models\ProductInDivision;
 use Src\Auth\Auth;
 use Src\Request;
-use Src\Validator\Validator;
+use BasicFilter\Validator\Validator;
 use Src\View;
 
 class DivisionProductController

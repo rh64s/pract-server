@@ -7,7 +7,7 @@ use Models\Order;
 use Models\Product;
 use Src\Auth\Auth;
 use Src\Request;
-use Src\Validator\Validator;
+use BasicFilter\Validator\Validator;
 use Src\View;
 
 class OrderController

@@ -9,7 +9,7 @@ use Models\Role;
 use Models\User;
 use Src\Auth\Auth;
 use Src\Request;
-use Src\Validator\Validator;
+use BasicFilter\Validator\Validator;
 use Src\View;
 
 class UserController
