@@ -21,7 +21,7 @@ class OrderController
         if ($user->isAdmin()) {
             $orders = Order::with(['product', 'division'])->orderBy('created_at', 'desc')->get();
         } elseif ($user->isStorekeeper() && $user->division) {
-            $orders = Order::where('division_id', $user->division->id)->get();
+            $orders = Order::where('division_id', $user->division->id)->with(['product', 'division'])->orderBy('created_at', 'desc')->get();
         }
 
         return new View('site.orders.index', ['orders' => $orders]);
@@ -31,7 +31,6 @@ class OrderController
     {
         $user = Auth::user();
 
-        // Ensure the user is a storekeeper and has an assigned division
         if (!$user->isStorekeeper() || !$user->division) {
             app()->route->redirect('/');
         }
@@ -62,7 +61,6 @@ class OrderController
             }
         }
 
-        // For GET request, show the creation form
         return new View('site.orders.create', [
             'products' => Product::orderBy('name')->get()
         ]);
@@ -82,7 +80,6 @@ class OrderController
         try {
             $order = Order::findOrFail((int)$request->get('id'));
 
-            // Allow deletion if user is admin or the storekeeper of that division
             $canDelete = $user->isAdmin() ||
                 ($user->isStorekeeper() && $user->division && $user->division->id === $order->division_id);
 
@@ -90,11 +87,37 @@ class OrderController
                 $order->delete();
             }
         } catch (Exception $e) {
-            // You could log the error here
+            throw new \Error($e);
         }
 
         app()->route->redirect('/orders');
     }
 
+    public function complete(Request $request): void
+    {
+        $user = Auth::user();
+        if (!$user->isStorekeeper()) {
+            app()->route->redirect('/orders');
+        }
 
+        $validator = new Validator($request->all(), [
+            'id' => ['required', 'exists:orders,id'],
+        ]);
+
+        if ($validator->fails()) {
+            app()->route->redirect('/orders');
+        }
+
+        try {
+            $order = Order::findOrFail((int)$request->get('id'));
+
+            if ($user->division->id === $order->division_id) {
+                $order->markAsCompleted();
+            }
+        } catch (Exception $e) {
+            throw new \Error($e);
+        }
+
+        app()->route->redirect('/orders');
+    }
 }

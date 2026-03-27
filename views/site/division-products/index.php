@@ -12,9 +12,9 @@
                 <label for="product_id" class="visually-hidden">Продукт</label>
                 <select class="form-select" name="product_id" id="product_id">
                     <option selected disabled>Выберите продукт для добавления...</option>
-                    <?php foreach ($available_products as $product): ?>
-                        <option value="<?= $product->id ?>">
-                            <?= htmlspecialchars($product->name) ?> (Арт: <?= htmlspecialchars($product->articul) ?>)
+                    <?php foreach ($available_products as $productItem): ?>
+                        <option value="<?= $productItem->id ?>">
+                            <?= htmlspecialchars($productItem->name) ?> (Арт: <?= htmlspecialchars($productItem->articul) ?>)
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -41,22 +41,22 @@
             </thead>
             <tbody>
             <?php if (!empty($products)): ?>
-                <?php foreach ($products as $product): ?>
+                <?php foreach ($products as $productItem): ?>
                     <tr class="td-all-text-centered">
-                        <td><?= htmlspecialchars($product->name) ?></td>
-                        <td><?= htmlspecialchars($product->articul) ?></td>
-                        <td><?= htmlspecialchars($product->unitType->name) ?></td>
+                        <td><?= htmlspecialchars($productItem->product->name) ?></td>
+                        <td><?= htmlspecialchars($productItem->product->articul) ?></td>
+                        <td><?= htmlspecialchars($productItem->product->unitType->name) ?></td>
                         <td class="d-flex align-items-center" style="gap: 10px;">
-                            <form method="post" action="<?= app()->route->getUrl('/division-products/update-count') ?>" class="d-flex align-items-center" style="gap: 10px;">
+                            <form method="post" action="<?= app()->route->getUrl('/division-products') ?>" class="d-flex align-items-center" style="gap: 10px;">
                                 <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
-                                <input type="hidden" name="product_id" value="<?= $product->id ?>">
-                                <input type="number" class="form-control form-control-sm" name="count" value="<?= $product->pivot->count ?>" min="0" style="width: 80px;">
+                                <input type="hidden" name="product_id" value="<?= $productItem->product_id ?>">
+                                <input type="number" class="form-control form-control-sm" name="count" value="<?= $productItem->count ?>" min="0" style="width: 80px;">
                                 <button class="btn btn-sm btn-success">✓</button>
                             </form>
                             <div>
                                 <form method="post" action="<?= app()->route->getUrl('/division-products/remove') ?>">
                                     <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
-                                    <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                                    <input type="hidden" name="product_id" value="<?= $productItem->product_id ?>">
                                     <button class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены, что хотите убрать продукт из подразделения?');">Убрать</button>
                                 </form>
                             </div>

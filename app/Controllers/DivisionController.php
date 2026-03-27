@@ -50,9 +50,8 @@ class DivisionController
     public function index(Request $request): string
     {
         $user = Auth::user();
-        // Assuming only admin (role_id 1) can view all divisions
         if (!$user->isAdmin()) {
-            app()->route->redirect('/'); // Redirect to a more appropriate page for non-admins
+            app()->route->redirect('/');
         }
 
         if($request->method === 'POST') {
@@ -69,8 +68,6 @@ class DivisionController
 
     public function delete(Request $request): void
     {
-        // Assuming only admin (role_id 1) can delete divisions
-
         $validator = new Validator($request->all(), [
             'id' => ['required', 'exists:divisions,id', 'regex:/^[0-9]*$/'],
         ], [

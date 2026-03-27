@@ -1,4 +1,4 @@
-<h2>Редактирование продукта: <?= htmlspecialchars($product->name) ?></h2>
+<h2>Редактирование продукта: <?= htmlspecialchars($productItem->name) ?></h2>
 <hr>
 <h3><?= $message ?? ''; ?></h3>
 <br>
@@ -7,17 +7,17 @@
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <div class="mb-3">
             <label class="form-label" for="name">Название</label>
-            <input class="form-control" id="name" type="text" name="name" value="<?= htmlspecialchars($product->name) ?>">
+            <input class="form-control" id="name" type="text" name="name" value="<?= htmlspecialchars($productItem->name) ?>">
         </div>
         <div class="mb-3">
             <label class="form-label" for="articul">Артикул</label>
-            <input class="form-control" id="articul" type="text" name="articul" value="<?= htmlspecialchars($product->articul) ?>">
+            <input class="form-control" id="articul" type="text" name="articul" value="<?= htmlspecialchars($productItem->articul) ?>">
         </div>
         <div class="mb-3">
             <label class="form-label" for="unit_type_id">Тип единицы</label>
             <select class="form-select" name="unit_type_id" id="unit_type_id">
                 <?php foreach ($unit_types as $type): ?>
-                    <option value="<?= $type->id ?>" <?php if ($type->id === $product->unit_type_id) echo 'selected'; ?>>
+                    <option value="<?= $type->id ?>" <?php if ($type->id === $productItem->unit_type_id) echo 'selected'; ?>>
                         <?= htmlspecialchars($type->name) ?>
                     </option>
                 <?php endforeach; ?>
@@ -34,7 +34,7 @@
         </div>
     </form>
     <hr>
-    <form method="post" action="<?= app()->route->getUrl('/products/delete?id=' . $product->id) ?>">
+    <form method="post" action="<?= app()->route->getUrl('/products/delete?id=' . $productItem->id) ?>">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <div class="col-auto">
             <button type="submit" class="btn btn-danger mb-3" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?');">Удалить</button>
