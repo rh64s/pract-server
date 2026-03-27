@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use BasicValidators\Validator\Validator;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Models\Division;
@@ -9,7 +10,6 @@ use Models\Order;
 use Models\User;
 use Src\Auth\Auth;
 use Src\Request;
-use BasicFilter\Validator\Validator;
 use Src\View;
 
 class DivisionController

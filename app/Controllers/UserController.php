@@ -2,14 +2,13 @@
 
 namespace Controllers;
 
-use Debug\DebugTools;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Models\Role;
 use Models\User;
 use Src\Auth\Auth;
 use Src\Request;
-use BasicFilter\Validator\Validator;
+use BasicValidators\Validator\Validator;
 use Src\View;
 
 class UserController

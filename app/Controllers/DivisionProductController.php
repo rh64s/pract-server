@@ -8,7 +8,7 @@ use Models\Product;
 use Models\ProductInDivision;
 use Src\Auth\Auth;
 use Src\Request;
-use BasicFilter\Validator\Validator;
+use BasicValidators\Validator\Validator;
 use Src\View;
 
 class DivisionProductController
