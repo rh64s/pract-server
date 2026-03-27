@@ -10,7 +10,7 @@ use Src\Validator\AbstractValidator;
 
 class ValueExistsValidator extends AbstractValidator
 {
-    protected string $message = "The :attribute should exists.";
+    protected string $message = "The :field should exists.";
 
     public function rule(): bool
     {

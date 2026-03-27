@@ -7,7 +7,7 @@ use Src\Validator\AbstractValidator;
 class MaxSymbolsValidator extends AbstractValidator
 {
 
-    protected string $message = 'Field :field should not be more than :max characters';
+    protected string $message = 'Field :field is long!';
 
     public function rule(): bool
     {

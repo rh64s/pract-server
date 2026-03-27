@@ -36,8 +36,8 @@ class UnitTypeController
             ], [
                 'required' => 'Поле :field пусто',
                 'unique' => 'Значение для :field не подходит! Оно уже занято',
-                'max' => 'Длина поля :field слишком длинное! Максимум: :value',
-                'min' => 'Длина поля :field слишком короткое! Минимум: :value',
+                'max' => 'Длина поля :field слишком длинное!',
+                'min' => 'Длина поля :field слишком короткое!',
             ]);
 
             if ($validator->fails()) {

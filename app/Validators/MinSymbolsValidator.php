@@ -7,7 +7,7 @@ use Src\Validator\AbstractValidator;
 class MinSymbolsValidator extends AbstractValidator
 {
 
-    protected string $message = 'Field :field should not be more than :min characters';
+    protected string $message = 'Field :field too low';
 
     public function rule(): bool
     {

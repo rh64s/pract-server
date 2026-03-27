@@ -7,7 +7,7 @@ use Src\Validator\AbstractValidator;
 
 class MimeTypesValidator extends AbstractValidator
 {
-    protected string $message = 'Field :field must be :value type';
+    protected string $message = 'Field :field must be of a valid type';
 
     public function rule(): bool
     {
