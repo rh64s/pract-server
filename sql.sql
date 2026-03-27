@@ -25,7 +25,7 @@ create table users
     phone      varchar(13)  not null,
     password   varchar(255) not null,
     login      varchar(255),
-    avatar     varchar(255) not null,
+    avatar     varchar(255),
     role_id    bigint unsigned         not null,
     foreign key (role_id) REFERENCES roles (id)
 );
