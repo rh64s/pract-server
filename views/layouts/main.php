@@ -15,7 +15,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="#">Складские приколы</a>
+            <a class="navbar-brand" href="<?= app()->route->getUrl('/hello')?>">Складские приколы</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,9 +47,15 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= app()->route->getUrl('/products') ?>">Продукты</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/reports') ?>">Отчеты</a>
+                                </li>
                     <?php elseif (app()->auth::user()->isStorekeeper()): ?>
                                 <li class="nav-item">
                                     <a class="nav-link" href="<?= app()->route->getUrl('/division-products') ?>">Продукты подразделения</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="<?= app()->route->getUrl('/reports/show?id=' . app()->auth::user()->division->id) ?>">Отчеты</a>
                                 </li>
                     <?php endif ?>
                             <li class="nav-item">

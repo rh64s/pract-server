@@ -7,7 +7,7 @@ $user = \Src\Auth\Auth::user();
 <br>
 <div class="container">
     <div class="avatar-container">
-        <img class="avatar" src="<?= $user->avatar ? '/' . $user->avatar : '/pop-it-mvc/public/static/img/default-avatar.png' ?>" alt="Аватар">
+        <img class="avatar" src="<?= $user->avatar ? $user->avatar : '/uploads/avatars/test.png' ?>" alt="Аватар">
     </div>
     <form method="post" enctype="multipart/form-data">
         <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>

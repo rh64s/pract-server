@@ -61,4 +61,9 @@ class Application
         //Запуск маршрутизации
         $this->route->start();
     }
+
+    function getPublic(): string
+    {
+        return __DIR__ . '/../../public';
+    }
 }

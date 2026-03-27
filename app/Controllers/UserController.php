@@ -102,7 +102,7 @@ class UserController
 
     public function setAvatar(Request $request): string
     {
-        if ($request->method === 'POST' && $request->get('avatar')) {
+        if ($request->method === 'POST') {
 
             $validator = new Validator($request->all(), [
                 'avatar' => ['required', 'mime:image/*']
@@ -115,20 +115,23 @@ class UserController
                 return new View('site.users.set-avatar', ['message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)]);
             }
 
-            $file = $request->get('avatar');
+            $file = $request->files()['avatar'];
             $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
             $filename = md5(time()) . '.' . $extension;
-            $path = 'public/uploads/avatars/' . $filename;
+            $upload_dir = app()->getPublic() . '/uploads/avatars/';
+            $full_path = $upload_dir . $filename;
 
-            if (move_uploaded_file($file['tmp_name'], $path)) {
-                $user = Auth::user();
-                if ($user->avatar) {
-                    unlink($user->avatar);
-                }
-                $user->update(['avatar' => $path]);
-                return new View('site.users.set-avatar', ['message' => 'Аватар успешно обновлен.']);
+            // Ensure the directory exists
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0777, true);
             }
 
+            if (move_uploaded_file($file['tmp_name'], $full_path)) {
+                $user = Auth::user();
+                $user->avatar = '/uploads/avatars/' . $filename; // Store relative path in DB
+                $user->save();
+                return new View('site.users.set-avatar', ['message' => 'Успешно загружено.']);
+            }
             return new View('site.users.set-avatar', ['message' => 'Ошибка при загрузке файла.']);
         }
         return new View('site.users.set-avatar');

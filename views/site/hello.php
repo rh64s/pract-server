@@ -12,7 +12,7 @@ $user = \Src\Auth\Auth::user();
             <p><strong>Отчество:</strong> <?= $user->patronymic ?></p>
                 <div class="col-md-6">
                     <div class="avatar-container">
-                        <img src="<?= $user->avatar ? '/' . $user->avatar : '/pop-it-mvc/public/static/img/default-avatar.png' ?>" alt="Аватар" class="avatar">
+                        <img class="avatar" src="<?= $user->avatar ? $user->avatar : '/uploads/avatars/test.png' ?>" alt="Аватар">
                     </div>
                 </div>
             <a href="<?= app()->route->getUrl('/users/set-avatar') ?>" class="btn btn-primary">Сменить аватар</a>

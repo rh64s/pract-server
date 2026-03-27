@@ -37,3 +37,6 @@ Route::add('POST', '/orders/complete', [Controllers\OrderController::class, 'com
 Route::add(['GET', 'POST'], '/division-products', [Controllers\DivisionProductController::class, 'index'])->middleware('auth','csrf', 'storekeeper-only', 'specialChars', 'trim');
 Route::add('POST', '/division-products/add', [Controllers\DivisionProductController::class, 'add'])->middleware('auth','csrf', 'storekeeper-only', 'trim', 'specialChars');
 Route::add('POST', '/division-products/remove', [Controllers\DivisionProductController::class, 'remove'])->middleware('auth','csrf', 'storekeeper-only', 'trim', 'specialChars');
+
+Route::add('GET', '/reports', [Controllers\DivisionController::class, 'reports'])->middleware('auth');
+Route::add('GET', '/reports/show', [Controllers\DivisionController::class, 'showReport'])->middleware('auth', 'int:id');

@@ -5,6 +5,7 @@ namespace Controllers;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Models\Division;
+use Models\Order;
 use Models\User;
 use Src\Auth\Auth;
 use Src\Request;
@@ -140,5 +141,46 @@ class DivisionController
             }
         }
         return new View('site.divisions.show', ['division' => $current_division, 'storekeepers' => $storekeepers]);
+    }
+
+    public function reports(Request $request): string
+    {
+        $user = Auth::user();
+
+        if ($user->isStorekeeper()) {
+            $division = $user->division;
+            if ($division) {
+                app()->route->redirect('/reports/show?id=' . $division->id);
+            } else {
+                // Storekeeper has no division, show an error or redirect
+                return new View('site.reports.index', ['message' => 'Вы не состоите в подразделении.']);
+            }
+        }
+
+        // For admins, show a list of all divisions
+        $divisions = Division::all();
+        return new View('site.reports.index', ['divisions' => $divisions]);
+    }
+
+    public function showReport(Request $request): string
+    {
+        $user = Auth::user();
+        $division_id = $request->get('id');
+
+        if ($user->isStorekeeper() && $user->division->id != $division_id) {
+            // Storekeeper is trying to access a report for another division
+            app()->route->redirect('/reports');
+        }
+
+        try {
+            $division = Division::findOrFail($division_id);
+            $orders = Order::where('division_id', $division_id)
+                ->with('product')
+                ->get();
+
+            return new View('site.reports.show', ['division' => $division, 'orders' => $orders]);
+        } catch (ModelNotFoundException $e) {
+            app()->route->redirect('/reports');
+        }
     }
 }
