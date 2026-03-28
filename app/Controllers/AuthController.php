@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Debug\DebugTools;
 use Src\Request;
 use Src\View;
 use Src\Auth\Auth;
@@ -10,6 +11,7 @@ class AuthController
 {
     public function hello(): string
     {
+        DebugTools::log(app()->route);
         $user = Auth::user();
         return new View('site.hello', ['user' => $user]);
     }
@@ -25,7 +27,7 @@ class AuthController
             app()->route->redirect('/hello');
         }
         //Если аутентификация не удалась, то сообщение об ошибке
-        return new View('site.login', ['message' => 'Неправильные логин или пароль']);
+        return new View('site.login', ['message' => 'Неправильный логин или пароль']);
     }
 
     public function logout(): void
