@@ -11,7 +11,6 @@ class AuthController
 {
     public function hello(): string
     {
-        DebugTools::log(app()->route);
         $user = Auth::user();
         return new View('site.hello', ['user' => $user]);
     }
@@ -25,14 +24,16 @@ class AuthController
         //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
+            return $this->hello();
         }
         //Если аутентификация не удалась, то сообщение об ошибке
         return new View('site.login', ['message' => 'Неправильный логин или пароль']);
     }
 
-    public function logout(): void
+    public function logout(): string
     {
         Auth::logout();
         app()->route->redirect('/hello');
+        return $this->hello();
     }
 }
