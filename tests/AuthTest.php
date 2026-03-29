@@ -80,6 +80,7 @@ class AuthTest extends TestCase
         (new \Controllers\AuthController())->logout();
         // after logout its still on profile page. fix it
         $this->expectOutputRegex('/' . preg_quote($expectedTitle, '/') . '/');
+        ob_end_clean();
     }
 
     public static function additionProviderLogout(): array

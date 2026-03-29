@@ -170,6 +170,7 @@ class DivisionController
         if ($user->isStorekeeper() && $user->division->id != $division_id) {
             // Storekeeper is trying to access a report for another division
             app()->route->redirect('/reports');
+            return $this->reports($request);
         }
 
         try {

@@ -62,8 +62,8 @@ create table orders
     created_at  TIMESTAMP not null default now(),
     updated_at  TIMESTAMP,
 
-    foreign key (division_id) REFERENCES divisions (id),
-    foreign key (product_id) REFERENCES products (id)
+    foreign key (division_id) REFERENCES divisions (id) on delete cascade on update cascade,
+    foreign key (product_id) REFERENCES products (id) on delete cascade on update cascade
 );
 
 create table divisions_products

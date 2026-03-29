@@ -5,6 +5,8 @@ namespace Controllers;
 use Exception;
 use Models\Order;
 use Models\Product;
+use Monolog\Level;
+use Monolog\Logger;
 use Src\Auth\Auth;
 use Src\Request;
 use BasicValidators\Validator\Validator;
@@ -27,15 +29,28 @@ class OrderController
         return new View('site.orders.index', ['orders' => $orders]);
     }
 
+
     public function store(Request $request): string
     {
+        $log = new Logger('name');
+        $log->pushHandler(new \Monolog\Handler\StreamHandler('/opt/lampp/htdocs/pop-it-mvc/logs.log', Level::Info));
+        if (!Auth::check()) {
+            app()->route->redirect('/login');
+            return (new View)->render('site.login');
+        }
         $user = Auth::user();
-
+        $log->info('authenticated');
         if (!$user->isStorekeeper() || !$user->division) {
+            $log->info('wrong!');
             app()->route->redirect('/');
+            return (new View)->render('site.hello', ['message' => 'У вас нет отдела']);
+
         }
 
         if ($request->method === 'POST') {
+            $log->info('its post');
+            $log->info(print_r($request->all(), 1));
+
             $validator = new Validator($request->all(), [
                 'product_id' => ['required', 'exists:products,id'],
                 'count' => ['required', 'integer', 'min:1'],
@@ -47,17 +62,22 @@ class OrderController
             ]);
 
             if ($validator->fails()) {
+                $log->info('fail');
                 return new View('site.orders.create', [
                     'products' => Product::orderBy('name')->get(),
                     'message' => json_encode($validator->errors(), JSON_UNESCAPED_UNICODE)
                 ]);
             }
+            $log->info('ok!');
 
             $data = $request->all();
             $data['division_id'] = $user->division->id;
 
             if (Order::create($data)) {
+                $log->info('success!');
+
                 app()->route->redirect('/orders');
+                return $this->index();
             }
         }
 

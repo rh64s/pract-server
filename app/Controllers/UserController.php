@@ -58,6 +58,7 @@ class UserController
         $can_view = $user->isSuperAdmin() ? [2,3] : [3];
         if($request->method === 'POST') {
             if(!in_array($request->all()['choiced_role_id'], $can_view)) {
+                app()->route->redirect('/users/create');
                 return new View('site.users.index', ['can_view' => $can_view, 'current_role' => $current_role, 'message' => 'Вы не можете просматривать эту группу']);
             }
             $current_role = $request->all()['choiced_role_id'];
@@ -73,6 +74,7 @@ class UserController
             }
 
         }
+        app()->route->redirect('/users/create');
         return new View('site.users.index', ['can_view' => $can_view, 'users' => User::all()->where('role_id', $current_role)->sortBy('surname')->sortBy('name')->sortBy('patronymic'), 'current_role' => $current_role]);
 
     }
