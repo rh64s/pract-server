@@ -3,6 +3,7 @@ namespace Controllers;
 
 use Models\Product;
 use Src\Auth\Auth;
+use Src\Auth\TokenWorker;
 use Src\Request;
 use Src\View;
 
@@ -23,8 +24,7 @@ class Api
     public function login(Request $request): void
     {
         if (Auth::attempt($request->all())) {
-            (new View())->toJSON([
-            ]);
+            (new View())->toJSON(['token' => TokenWorker::generateToken(Auth::user())]);
         }
     }
 }

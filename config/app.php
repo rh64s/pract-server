@@ -6,6 +6,7 @@ return [
     'identity'=>\Models\User::class,
     'routeMiddleware' => [
         'auth' => \Middlewares\AuthMiddleware::class,
+        'authToken' => \Middlewares\TokenMiddleware::class,
         'admin-only' => \Middlewares\AdminOnlyMiddleware::class,
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'int' => \Middlewares\OnlyNumInParameter::class,

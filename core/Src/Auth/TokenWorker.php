@@ -1,5 +1,7 @@
 <?php
 
+namespace Src\Auth;
+
 use Models\User;
 use Illuminate\Database\Capsule\Manager;
 class TokenWorker
@@ -14,7 +16,7 @@ class TokenWorker
         return $token;
     }
 
-    public static function getUserToken(string $token)
+    public static function user(string $token)
     {
         return User::find(Manager::table("sessions")->where('token', $token)->user_id->first());
     }
