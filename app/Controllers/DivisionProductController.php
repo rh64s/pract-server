@@ -6,6 +6,8 @@ use Error;
 use Exception;
 use Models\Product;
 use Models\ProductInDivision;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Src\Auth\Auth;
 use Src\Request;
 use BasicValidators\Validator\Validator;
@@ -15,6 +17,7 @@ class DivisionProductController
 {
     public function index(Request $request): string
     {
+        $log = new Logger('DivisionProductController'); $log->pushHandler(new StreamHandler('/opt/lampp/htdocs/pop-it-mvc/logss.log', Logger::INFO));
         $user = Auth::user();
         $division = $user->division;
         $message = '';
@@ -23,10 +26,12 @@ class DivisionProductController
         }
 
         if ($request->method === 'POST') {
+            $log->info(print_r($request->all(),1 ));
+
             $validator = new Validator($request->all(), [
                 'product_id' => ['required', 'exists:products,id'],
+                'min_value' => ['required', 'regex:/^[0-9]*$/', 'min:1'],
                 'count' => ['required', 'regex:/^[0-9]*$/', 'min:0'],
-                'min_value' => ['required', 'regex:/^[0-9]*$/', 'min:1']
             ]);
 
             if (!$validator->fails()) {

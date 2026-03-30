@@ -15,9 +15,6 @@ class AuthController
     public function hello(): string
     {
         $user = Auth::user();
-        $log = new Logger('in hello');
-        $log->pushHandler(new StreamHandler('/opt/lampp/htdocs/pop-it-mvc/logs.log', Level::Info));
-        $log->info(Auth::check());
         return new View('site.hello', ['user' => $user]);
     }
 

@@ -42,7 +42,8 @@
             <tbody>
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $productItem): ?>
-                    <tr class="td-all-text-centered">
+                    <?php $needs_restock = $productItem->count < $productItem->min_value; ?>
+                    <tr class="td-all-text-centered <?= $needs_restock ? 'table-danger' : '' ?>">
                         <td><?= htmlspecialchars($productItem->product->name) ?></td>
                         <td><?= htmlspecialchars($productItem->product->articul) ?></td>
                         <td><?= htmlspecialchars($productItem->product->unitType->name) ?></td>
@@ -62,6 +63,7 @@
                                 </form>
                             </div>
                         </td>
+                        <td><?= $needs_restock ? 'Да' : 'Нет' ?></td>
                     </tr>
                 <?php endforeach; ?>
             <?php else: ?>
