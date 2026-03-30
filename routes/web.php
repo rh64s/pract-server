@@ -32,7 +32,7 @@ Route::add('POST', '/products/delete', [Controllers\ProductController::class, 'd
 Route::add('GET', '/orders', [Controllers\OrderController::class, 'index'])->middleware('auth');
 Route::add(['GET', 'POST'], '/orders/create', [Controllers\OrderController::class, 'store'])->middleware('auth','csrf', 'storekeeper-only', 'trim', 'specialChars');
 Route::add('POST', '/orders/delete', [Controllers\OrderController::class, 'delete'])->middleware('csrf', 'auth', 'trim', 'int:id', 'specialChars');
-Route::add('POST', '/orders/complete', [Controllers\OrderController::class, 'complete'])->middleware('auth', 'csrf', 'storekeeper-only', 'trim', 'int:id');
+Route::add('POST', '/orders/complete', [Controllers\OrderController::class, 'complete'])->middleware('auth', 'csrf', 'admin-only', 'trim', 'int:id');
 
 Route::add(['GET', 'POST'], '/division-products', [Controllers\DivisionProductController::class, 'index'])->middleware('auth','csrf', 'storekeeper-only', 'specialChars', 'trim');
 Route::add('POST', '/division-products/add', [Controllers\DivisionProductController::class, 'add'])->middleware('auth','csrf', 'storekeeper-only', 'trim', 'specialChars');

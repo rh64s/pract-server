@@ -117,10 +117,7 @@ class OrderController
 
         try {
             $order = Order::findOrFail((int)$request->get('id'));
-
-            if ($user->division->id === $order->division_id) {
-                $order->markAsCompleted();
-            }
+            $order->update(['is_completed' => true]);
         } catch (Exception $e) {
             throw new \Error($e);
         }
