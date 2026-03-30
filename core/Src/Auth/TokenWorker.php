@@ -18,7 +18,7 @@ class TokenWorker
 
     public static function user(string $token)
     {
-        return User::find(Manager::table("sessions")->where('token', $token)->user_id->first());
+        return User::find(Manager::table("sessions")->where('token', $token)->first()->user_id);
     }
 
     public static function clearToken(string $token)

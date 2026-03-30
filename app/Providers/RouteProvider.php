@@ -22,9 +22,11 @@ class RouteProvider extends AbstractProvider
             $this->app->settings->removeAppMiddleware('specialChars');
 
             //Загружаем маршруты из файла для апи
-            Route::group('/api', function () {
-                require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/api.php';
-            });
+//            Route::group('/api', function () {
+
+            // Route group не работатет, поэтому в api.php прописывать вместе с префиксом. печалька
+            require_once __DIR__ . '/../..' . $this->app->settings->getRoutePath() . '/api.php';
+//            });
             return;
         }
 

@@ -2,11 +2,11 @@
 return [
     //Класс аутентификации
     'auth' => \Src\Auth\Auth::class,
-    //Клас пользователя
+    //Класс пользователя
     'identity'=>\Models\User::class,
     'routeMiddleware' => [
         'auth' => \Middlewares\AuthMiddleware::class,
-        'authToken' => \Middlewares\TokenMiddleware::class,
+        'token' => \Middlewares\TokenMiddleware::class,
         'admin-only' => \Middlewares\AdminOnlyMiddleware::class,
         'superadmin-only' => \Middlewares\SuperAdminOnlyMiddleware::class,
         'int' => \Middlewares\OnlyNumInParameter::class,

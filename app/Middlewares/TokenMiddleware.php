@@ -9,17 +9,16 @@ use Src\Auth\TokenWorker;
 
 class TokenMiddleware
 {
-    public function handle(Request $request, callable $next)
+    public function handle(Request $request)
     {
         $headerAuth = $_SERVER['HTTP_AUTHORIZATION'] ?? getallheaders()['Authorization'] ?? '';
 
         if (preg_match('/Bearer\s(\S+)/', $headerAuth, $matches)) {
             $token = $matches[1];
-//            $user = User::find(Manager::table('sessions')->where('token', $token)->first()->user_id);
             $user = TokenWorker::user($token);
             if ($user) {
                 Auth::login($user);
-                return $next ? $next($request) : $request;
+                return;
             }
         }
 

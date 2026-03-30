@@ -1,5 +1,5 @@
 <?php
 use Src\Route;
-Route::add('GET', '/', [Controllers\Api::class, 'index'])->middleware('authToken');
-Route::add('POST', '/echo', [Controllers\Api::class, 'echo']);
-Route::add('POST', '/login', [Controllers\Api::class, 'login']);
+Route::add('GET', '/api/', [Controllers\Api::class, 'index'])->middleware('token');
+Route::add('POST', '/api/echo', [Controllers\Api::class, 'echo'])->middleware('token');
+Route::add('POST', '/api/login', [Controllers\Api::class, 'login']);

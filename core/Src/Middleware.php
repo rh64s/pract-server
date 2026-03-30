@@ -6,6 +6,8 @@ use FastRoute\RouteCollector;
 use FastRoute\RouteParser\Std;
 use FastRoute\DataGenerator\MarkBased;
 use FastRoute\Dispatcher\MarkBased as Dispatcher;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Src\Traits\SingletonTrait;
 
 class Middleware
@@ -56,7 +58,6 @@ class Middleware
     {
         //Получаем список всех разрешенных классов middlewares из настроек приложения
         $routeMiddleware = app()->settings->app['routeAppMiddleware'];
-
         //Перебираем и запускаем их
         foreach ($routeMiddleware as $name => $class) {
             $args = explode(':', $name);
@@ -69,6 +70,10 @@ class Middleware
     private function getMiddlewaresForRoute(string $httpMethod, string $uri): array
     {
         $dispatcherMiddleware = new Dispatcher($this->middlewareCollector->getData());
+        $log = new Logger('app');
+        $log->pushHandler(new StreamHandler('/opt/lampp/htdocs/pop-it-mvc/logs.log', Logger::INFO));
+        $log->info(print_r($this->middlewareCollector->getData(), true));
+        $log->info($uri);
         return $dispatcherMiddleware->dispatch($httpMethod, $uri)[1] ?? [];
     }
 
