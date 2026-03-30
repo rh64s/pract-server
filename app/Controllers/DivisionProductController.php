@@ -26,13 +26,14 @@ class DivisionProductController
             $validator = new Validator($request->all(), [
                 'product_id' => ['required', 'exists:products,id'],
                 'count' => ['required', 'regex:/^[0-9]*$/', 'min:0'],
+                'min_value' => ['required', 'regex:/^[0-9]*$/', 'min:1']
             ]);
 
             if (!$validator->fails()) {
                 try {
                     ProductInDivision::where('division_id', $division->id)
                         ->where('product_id', $request->get('product_id'))
-                        ->update(['count' => $request->get('count')]);
+                        ->update(['count' => $request->get('count'), 'min_value' => $request->get('min_value')]);
                 } catch (Exception $e) {
                     throw new Error($e);
                 }

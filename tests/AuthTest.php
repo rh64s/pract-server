@@ -73,13 +73,15 @@ class AuthTest extends TestCase
             ->willReturn($userData);
         $request->method = 'POST';
         (new \Controllers\AuthController())->login($request);
-        ob_start();
         $this->assertTrue(Auth::check());
-//            $request = $this->createMock(\Src\Request::class);
-        $request->method = 'GET';
+        ob_start();
+        $requestLogout = $this->createMock(\Src\Request::class);
+        $requestLogout->expects($this->any())
+            ->method('all')
+            ->willReturn($userData);
+        $requestLogout->method = 'GET';
         (new \Controllers\AuthController())->logout();
-        // after logout its still on profile page. fix it
-        $this->expectOutputRegex('/' . preg_quote($expectedTitle, '/') . '/');
+        $this->assertFalse(Auth::check());
         ob_end_clean();
     }
 

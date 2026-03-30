@@ -4,7 +4,7 @@ $user = \Src\Auth\Auth::user();
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <?php if (\Src\Auth\Auth::check()): ?>
+            <?php if ($user !== null): ?>
             <h2>Профиль</h2>
             <hr>
             <p><strong>Имя:</strong> <?= $user->name ?></p>

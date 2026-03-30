@@ -71,6 +71,7 @@ create table divisions_products
     division_id bigint unsigned not null,
     product_id  bigint unsigned not null,
     count       int not null,
+    min_value   int not null default 1,
     foreign key (division_id) REFERENCES divisions (id) on delete cascade,
     foreign key (product_id) REFERENCES products (id) on delete cascade,
     primary key (division_id, product_id)

@@ -35,8 +35,8 @@
                 <th>Название</th>
                 <th>Артикул</th>
                 <th>Ед. изм.</th>
-                <th>Количество</th>
-                <th></th>
+                <th>Количество и минимум</th>
+                <th>Требуется пополнить?</th>
             </tr>
             </thead>
             <tbody>
@@ -51,6 +51,7 @@
                                 <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                                 <input type="hidden" name="product_id" value="<?= $productItem->product_id ?>">
                                 <input type="number" class="form-control form-control-sm" name="count" value="<?= $productItem->count ?>" min="0" style="width: 80px;">
+                                <input type="number" class="form-control form-control-sm" name="min_value" value="<?= $productItem->min_value ?>" min="1" style="width: 80px;">
                                 <button class="btn btn-sm btn-success">✓</button>
                             </form>
                             <div>

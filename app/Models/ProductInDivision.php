@@ -11,7 +11,7 @@ class ProductInDivision extends Model
     public $timestamps = false;
     protected $table = 'divisions_products';
 
-    protected $fillable = ['product_id', 'division_id', 'count'];
+    protected $fillable = ['product_id', 'division_id', 'count', 'min_value'];
 
     public function division(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

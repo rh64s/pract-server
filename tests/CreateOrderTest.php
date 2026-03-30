@@ -83,6 +83,7 @@ class CreateOrderTest extends TestCase
         ]);
     }
 
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
     public function testStorekeeperCanCreateOrder()
     {
 
@@ -108,6 +109,7 @@ class CreateOrderTest extends TestCase
         ])->first());
     }
 
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
     public function testGhostCannotCreateOrder()
     {
         // Log out
@@ -133,6 +135,7 @@ class CreateOrderTest extends TestCase
         ])->first());
     }
 
+    #[\PHPUnit\Framework\Attributes\RunInSeparateProcess]
     public function testStorekeeperCannotCreateOrderForAnotherDivision()
     {
         // Log in as the storekeeper

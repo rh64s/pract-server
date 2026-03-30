@@ -41,13 +41,13 @@
                     <td><?= $order->is_completed ? 'Выполнен' : 'В ожидании' ?></td>
                     <td><?= date('d.m.Y H:i', strtotime($order->created_at)) ?></td>
                     <td>
-                        <?php if (app()->auth::user()->isStorekeeper() && !$order->is_completed): ?>
+                        <?php if (app()->auth::user()->isAdmin() && !$order->is_completed): ?>
                             <form method="post" action="<?= app()->route->getUrl('/orders/complete') ?>">
                                 <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                                 <input type="hidden" name="id" value="<?= $order->id ?>">
-                                <button class="btn btn-success" onclick="return confirm('Вы уверены, что хотите отметить этот заказ как выполненный?');">Закончить</button>
+                                <button class="btn btn-success" onclick="return confirm('Вы уверены, что хотите отметить этот заказ как принятый?');">Закончить</button>
                             </form>
-                        <?php elseif (app()->auth::user()->isAdmin()): ?>
+                        <?php elseif (app()->auth::user()->isStorekeeper()): ?>
                         <form method="post" action="<?= app()->route->getUrl('/orders/delete') ?>">
                             <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                             <input type="hidden" name="id" value="<?= $order->id ?>">
