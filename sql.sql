@@ -81,3 +81,10 @@ insert into roles (id, name)
 VALUES (1, 'superadmin'),
        (2, 'admin'),
        (3, 'storekeeper');
+
+create table sessions
+(
+    user_id bigint unsigned not null,
+    token varchar(255) not null,
+    foreign key (user_id) REFERENCES users (id) on delete cascade on update cascade
+)
