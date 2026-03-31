@@ -1,0 +1,620 @@
+{
+  "info": {
+    "name": "practicserv",
+    "description": null,
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "echo",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        },
+        "description": "This request retrieves a list of users from the JSONPlaceholder API.",
+        "url": {
+          "raw": "{{host}}/api/echo",
+          "protocol": "",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "api",
+            "echo"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sis\": \"sas\",\n  \"asd\": {\n    \"sasd\": 1\n  },\n  \"wasd\": [\n    \"asd\",\n    1\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get products",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": {
+            "key": "token",
+            "value": "{{token}}",
+            "type": "string"
+          }
+        },
+        "description": "",
+        "url": {
+          "raw": "{{host}}/api/",
+          "protocol": "",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "api",
+            ""
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{host}}/api/login",
+          "protocol": "",
+          "host": [
+            "{{host}}"
+          ],
+          "path": [
+            "api",
+            "login"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"login\": \"admin\",\n  \"password\": \"admin\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Division Products",
+      "item": [
+        {
+          "name": "add prudct to division",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/division-products",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "division-products"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"product_id\": 2,\n  \"count\": 20\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "get product in division",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/division-products",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "division-products"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "remove product form division",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/division-products?product_id=1&division_id=1",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "division-products?product_id=1&division_id=1"
+              ],
+              "query": [
+                {
+                  "key": "product_id",
+                  "value": "1"
+                },
+                {
+                  "key": "division_id",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "item": [
+        {
+          "name": "Create order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/orders",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Delete order",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/orders?id=1",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "orders?id=1"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/orders",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "orders"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Mar order as completed",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/orders/complete",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "orders",
+                "complete"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 107\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "item": [
+        {
+          "name": "Create product",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/products",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"one more product\",\n  \"articul\": \"1234\",\n  \"unit_type_id\": 2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/products",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "unit types",
+      "item": [
+        {
+          "name": "Create unit type",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/unit-types",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "unit-types"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"one more\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get unit types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/unit-types",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "unit-types"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "users",
+      "item": [
+        {
+          "name": "Create user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "key": "token",
+                "value": "{{token}}",
+                "type": "string"
+              }
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/users",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John\",\n  \"surname\": \"Doeoh\",\n  \"phone\": \"123122\",\n  \"role_id\": 2,\n  \"login\": \"qwe3\",\n  \"password\": \"qwe\",\n  \"email\": \"qwe3@qweqwe.qwe\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Get users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/users",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Get current user",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/me",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "me"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "division",
+      "item": [
+        {
+          "name": "all reports (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/reports",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "reports"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "get one report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "",
+            "url": {
+              "raw": "{{host}}/api/reports/show",
+              "protocol": "",
+              "host": [
+                "{{host}}"
+              ],
+              "path": [
+                "api",
+                "reports",
+                "show"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "host",
+      "value": "http://localhost",
+      "type": "default"
+    },
+    {
+      "key": "tokenS",
+      "value": "13c5f3d4cc27278a92b8ae8d6efdc7e26cbeeb8b5d95e43382e6984ee2162210",
+      "type": "default"
+    },
+    {
+      "key": "tokenA",
+      "value": "143b05cdf7e56beddba46029d2bd467246c122f8df168524ed01d8f448fd91e3",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}
