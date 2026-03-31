@@ -27,4 +27,9 @@ class Api
             (new View())->toJSON(['token' => TokenWorker::generateToken(Auth::user())]);
         }
     }
+
+    public function profile(Request $request): void
+    {
+        (new View())->toJSON(Auth::user()->toArray());
+    }
 }

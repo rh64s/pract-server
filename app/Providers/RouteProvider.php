@@ -2,6 +2,7 @@
 
 namespace Providers;
 
+use Src\Auth\Auth;
 use Src\Provider\AbstractProvider;
 use Src\Route;
 
@@ -20,7 +21,7 @@ class RouteProvider extends AbstractProvider
             //Если префикс адреса api то удаляем не нужные middleware
             $this->app->settings->removeAppMiddleware('csrf');
             $this->app->settings->removeAppMiddleware('specialChars');
-
+            Auth::logout();
             //Загружаем маршруты из файла для апи
 //            Route::group('/api', function () {
 
